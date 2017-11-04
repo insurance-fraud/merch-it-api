@@ -42,10 +42,41 @@ RSpec.describe PaymentsController, type: :controller do
   let(:valid_session) { {} }
 
   describe "GET #attempt_payment" do
+    before do
+      get :attempt_payment,
+          params: { payment: {
+            email: "test@example.com",
+            amount: 10000.00 }
+          },
+          session: valid_session
+    end
+
     it "returns a success response" do
-      get :attempt_payment, params: {}, session: valid_session
       expect(response).to be_success
     end
-  end
 
+    it "creates Payment with proper email" do
+      payment = Payment.last
+
+      expect(payment.email).to eq("test@example.com")
+    end
+
+    it "creates Payment with proper amount" do
+      payment = Payment.last
+
+      expect(payment.amount).to eq(10000.00)
+    end
+
+    it "creates Payment with order_id" do
+      payment = Payment.last
+
+      expect(payment.order_id).to be_a_kind_of(Integer)
+    end
+
+    it "creates Payment with order_timestmap" do
+      payment = Payment.last
+
+      expect(payment.order_timestamp).to be_within(1.second).of(DateTime.now)
+    end
+  end
 end
