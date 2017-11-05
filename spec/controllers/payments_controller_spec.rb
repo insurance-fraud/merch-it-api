@@ -43,6 +43,8 @@ RSpec.describe PaymentsController, type: :controller do
 
   describe "GET #attempt_payment" do
     before do
+      allow(HTTParty).to receive(:get)
+
       get :attempt_payment,
           params: { payment: {
             email: "test@example.com",
