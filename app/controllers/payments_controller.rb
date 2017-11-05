@@ -14,6 +14,6 @@ class PaymentsController < ApplicationController
   private
   # Only allow a trusted parameter "white list" through.
   def payment_params
-    params.require(:payment).permit(:payment_url, :payment_id, :amount, :email, :order_id)
+    params.require(:payment).permit(:payment_url, :payment_id, :amount, :email)
   end
 end
