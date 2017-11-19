@@ -18,6 +18,10 @@ ActiveRecord::Schema.define(version: 20171104142731) do
   create_table "payments", force: :cascade do |t|
     t.string "payment_url"
     t.integer "payment_id"
+    t.string "email"
+    t.float "amount"
+    t.integer "order_id"
+    t.datetime "order_timestamp"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
