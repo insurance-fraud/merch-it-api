@@ -43,7 +43,15 @@ RSpec.describe PaymentsController, type: :controller do
 
   describe "GET #attempt_payment" do
     before do
-      allow(HTTParty).to receive(:get)
+      stub_request(:get, "https://localhost:3000/attempt_payment").
+        to_return(
+          status: 200,
+          body: {
+            data: {
+              payment_url: "url",
+              payment_id: 42}
+          }.to_json,
+          headers: {})
 
       get :attempt_payment,
           params: { payment: {

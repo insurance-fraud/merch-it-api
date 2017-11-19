@@ -8,12 +8,12 @@ class PaymentsController < ApplicationController
 
     # contact acquire-it-api
     resp = AcquireItAPI.attempt_payment(merchant_id: Payment::MERCHANT_ID,
-                                          merchant_password: Payment::MERCHANT_PASSWORD,
-                                          amount: payment.amount,
-                                          email: payment.email,
-                                          order_id: payment.order_id,
-                                          order_timestamp: payment.order_timestamp,
-                                          error_url: error_url)
+                                        merchant_password: Payment::MERCHANT_PASSWORD,
+                                        amount: payment.amount,
+                                        email: payment.email,
+                                        order_id: payment.order_id,
+                                        order_timestamp: payment.order_timestamp,
+                                        error_url: error_url)
 
     if resp.code == 200
       body = JSON.parse resp.body
