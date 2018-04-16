@@ -8,7 +8,8 @@ API for selling insurances to vandering travellers
 
 Running is easy, just do:
 
-```
+```bash
 docker-compose build
+docker-compose run merch-it-api.web rake db:create db:migrate
 docker-compose up
 ```

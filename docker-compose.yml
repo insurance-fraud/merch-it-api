@@ -9,5 +9,7 @@ services:
       - .:/merch-it
     ports:
       - "3001:3001"
+    links:
+      - merch-it-api.db:db
     depends_on:
       - merch-it-api.db
