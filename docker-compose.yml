@@ -1,8 +1,8 @@
 version: '2'
 services:
-  db:
+  merch-it-api.db:
     image: postgres
-  web:
+  merch-it-api.web:
     build: .
     command: bundle exec rails s -p 3001 -b '0.0.0.0'
     volumes:
@@ -10,4 +10,4 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - db
+      - merch-it-api.db
