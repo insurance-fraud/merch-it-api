@@ -1,9 +1,11 @@
-version: '2'
+version: '2.2'
 services:
   merch-it-api.db:
     image: postgres
   merch-it-api.web:
-    build: .
+    build:
+      context: .
+      network: host
     command: bundle exec rails s -p 3001 -b '0.0.0.0'
     volumes:
       - .:/merch-it
