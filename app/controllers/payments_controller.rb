@@ -1,5 +1,5 @@
 class PaymentsController < ApplicationController
-  # GET /payments
+  # POST /attempt_payment
   def attempt_payment
     payment = Payment.create(amount: payment_params[:amount],
                              email: payment_params[:email],

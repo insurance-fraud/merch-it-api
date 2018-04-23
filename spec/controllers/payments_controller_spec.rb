@@ -41,7 +41,7 @@ RSpec.describe PaymentsController, type: :controller do
   # PaymentsController. Be sure to keep this updated too.
   let(:valid_session) { {} }
 
-  describe "GET #attempt_payment" do
+  describe "POST #attempt_payment" do
     before do
       stub_request(:get, "https://localhost:3000/attempt_payment").
         to_return(
@@ -53,12 +53,12 @@ RSpec.describe PaymentsController, type: :controller do
           }.to_json,
           headers: {})
 
-      get :attempt_payment,
-          params: { payment: {
-            email: "test@example.com",
-            amount: 10000.00 }
-          },
-          session: valid_session
+      post :attempt_payment,
+        params: { payment: {
+        email: "test@example.com",
+        amount: 10000.00 }
+      },
+      session: valid_session
     end
 
     it "returns a success response" do
