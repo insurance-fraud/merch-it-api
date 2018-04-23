@@ -1,6 +1,13 @@
 module AcquireItAPI
   def self.attempt_payment(params)
-    HTTParty.get("#{acquire_it_api_url}/attempt_payment", params)
+    payment = { :payment => params }
+
+    Rails.logger.info payment
+
+    HTTParty.post(
+      "#{acquire_it_api_url}/payments/attempt_payment",
+      :body => payment
+    )
   end
 
   def self.acquire_it_api_url

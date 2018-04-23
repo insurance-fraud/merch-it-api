@@ -15,6 +15,8 @@ class PaymentsController < ApplicationController
                                         order_timestamp: payment.order_timestamp,
                                         error_url: error_url)
 
+    logger.info resp.body
+
     if resp.code == 200
       body = JSON.parse resp.body
 
@@ -23,7 +25,9 @@ class PaymentsController < ApplicationController
 
       render json: { payment_url: payment.payment_url, payment_id: payment.payment_id }
     else
-      redirect_to error_url and return
+      logger.info resp.body
+
+      render json: { error_url: error_url }, status: :not_found
     end
   end
 
@@ -34,6 +38,6 @@ class PaymentsController < ApplicationController
   end
 
   def error_url
-    "#{ENV["MERCH_IT_URL"]}/error"
+    "http://boxbox:3000/error"
   end
 end
