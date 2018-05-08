@@ -25,9 +25,12 @@ class PaymentsController < ApplicationController
 
       render json: { payment_url: payment.payment_url, payment_id: payment.payment_id }
     else
-      logger.info resp.body
+      parsed_body = JSON.parse(resp.body)
 
-      render json: { error_url: error_url }, status: :not_found
+      logger.info resp.body
+      logger.info parsed_body
+
+      render json: { error_url: error_url, errors: parsed_body["error"] }, status: :not_found
     end
   end
 

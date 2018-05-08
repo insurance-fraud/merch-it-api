@@ -2,6 +2,8 @@ version: '2.2'
 services:
   merch-it-api.db:
     image: postgres
+    ports:
+      - "5435:5432"
   merch-it-api.web:
     build:
       context: .
