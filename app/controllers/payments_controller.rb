@@ -19,9 +19,10 @@ class PaymentsController < ApplicationController
 
     if resp.code == 200
       body = JSON.parse resp.body
+      logger.info body
 
-      payment.update_attributes(payment_url: body[:payment_url],
-                                payment_id: body[:payment_id])
+      payment.update_attributes(payment_url: body["payment_url"],
+                                payment_id: body["payment_id"])
 
       render json: { payment_url: payment.payment_url, payment_id: payment.payment_id }
     else
@@ -41,6 +42,6 @@ class PaymentsController < ApplicationController
   end
 
   def error_url
-    "http://boxbox:3000/error"
+    "http://localhost:3000/error"
   end
 end
