@@ -43,7 +43,7 @@ RSpec.describe PaymentsController, type: :controller do
 
   describe "POST #attempt_payment" do
     before do
-      stub_request(:get, "https://localhost:3000/attempt_payment").
+      stub_request(:post, "http://localhost:4001/payments/attempt_payment").
         to_return(
           status: 200,
           body: {
@@ -54,21 +54,12 @@ RSpec.describe PaymentsController, type: :controller do
           headers: {})
 
       post :attempt_payment,
-        params: { payment: {
-        email: "test@example.com",
-        amount: 10000.00 }
-      },
+        params: { payment: { amount: 10000.00 } },
       session: valid_session
     end
 
     it "returns a success response" do
       expect(response).to be_success
-    end
-
-    it "creates Payment with proper email" do
-      payment = Payment.last
-
-      expect(payment.email).to eq("test@example.com")
     end
 
     it "creates Payment with proper amount" do

@@ -13,9 +13,9 @@ class PaymentsController < ApplicationController
                                         email: payment.email,
                                         order_id: payment.order_id,
                                         order_timestamp: payment.order_timestamp,
-                                        error_url: error_url)
-
-    logger.info resp.body
+                                        success_url: success_url,
+                                        error_url: error_url,
+                                        failed_url: failed_url)
 
     if resp.code == 200
       body = JSON.parse resp.body
@@ -28,7 +28,6 @@ class PaymentsController < ApplicationController
     else
       parsed_body = JSON.parse(resp.body)
 
-      logger.info resp.body
       logger.info parsed_body
 
       render json: { error_url: error_url, errors: parsed_body["error"] }, status: :not_found
@@ -43,5 +42,13 @@ class PaymentsController < ApplicationController
 
   def error_url
     "http://localhost:3000/error"
+  end
+
+  def success_url
+    "http://localhost:3000/success"
+  end
+
+  def failed_url
+    "http://localhost:3000/fail"
   end
 end
