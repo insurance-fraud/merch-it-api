@@ -3,17 +3,17 @@ class PaymentsController < ApplicationController
   def attempt_payment
     payment = Payment.create(amount: payment_params[:amount],
                              email: payment_params[:email],
-                             order_id: SecureRandom.hex(10),
+                             order_id: SecureRandom.hex(8),
                              order_timestamp: DateTime.now)
 
     # contact acquire-it-api
-    resp = AcquireItAPI.attempt_payment(merchant_id: Payment::MERCHANT_ID,
-                                        merchant_password: Payment::MERCHANT_PASSWORD,
+    resp = AcquireItAPI.attempt_payment(merchant_id: params[:merchant_id],
+                                        merchant_password: params[:merchant_password],
                                         amount: payment.amount,
                                         email: payment.email,
                                         order_id: payment.order_id,
                                         order_timestamp: payment.order_timestamp,
-                                        success_url: success_url,
+                                        success_url: "#{success_url}?email=#{payment.email}",
                                         error_url: error_url,
                                         failed_url: failed_url)
 
@@ -24,7 +24,8 @@ class PaymentsController < ApplicationController
       payment.update_attributes(payment_url: body["payment_url"],
                                 payment_id: body["payment_id"])
 
-      render json: { payment_url: payment.payment_url, payment_id: payment.payment_id }
+      render json: { payment_url: payment.payment_url,
+                     payment_id: payment.payment_id }
     else
       parsed_body = JSON.parse(resp.body)
 
