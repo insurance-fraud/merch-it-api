@@ -1,4 +1,5 @@
 class PaymentsController < ApplicationController
+  MERCH_IT_URL = ENV["MERCH_IT_URL"] || "http://localhost:3000"
   # POST /attempt_payment
   def attempt_payment
     payment = Payment.create(amount: payment_params[:amount],
@@ -42,14 +43,14 @@ class PaymentsController < ApplicationController
   end
 
   def error_url
-    "http://localhost:3000/error"
+    "#{MERCH_IT_URL}/error"
   end
 
   def success_url
-    "http://localhost:3000/success"
+    "#{MERCH_IT_URL}/success"
   end
 
   def failed_url
-    "http://localhost:3000/fail"
+    "#{MERCH_IT_URL}/fail"
   end
 end
